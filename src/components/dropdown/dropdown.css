@@ -1,0 +1,24 @@
+.dropdown-wrapper {
+  border: 3px solid;
+}
+
+.dropdown-label {
+  display: block;
+  line-height: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.dropdown-option {
+  display: block;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  width: 100%;
+  border-radius: 0.25rem;
+
+  line-height: 1.5rem;
+  font-size: 0.875rem;
+}
+
+/* <div className="sm:col-span-2">
+        <select className="ring-1 ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        > */
