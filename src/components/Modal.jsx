@@ -1,10 +1,23 @@
 import { Fragment, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 
-export default function Modal() {
+export default function Modal({ toggleModal }) {
   const [open, setOpen] = useState(true);
 
   const cancelButtonRef = useRef(null);
+  const navigate = useNavigate();
+
+  function handleClickHomepage() {
+    //setOpen(false);
+    toggleModal();
+    navigate("/");
+  }
+
+  // function handleClickProcessNewEmployee() {
+  //   //setOpen(false);
+  //   toggleModal();
+  // }
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -39,7 +52,7 @@ export default function Modal() {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">
+                  <div className="flex items-center">
                     <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-lime-200 sm:mx-0 sm:h-10 sm:w-10">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -71,18 +84,18 @@ export default function Modal() {
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-lime-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={() => setOpen(false)}
+                    className="inline-flex w-full justify-center rounded-md bg-lime-600 px-6 py-2 text-sm font-semibold text-white hover:bg-cyan-600 hover:scale-105 sm:ml-3 sm:w-auto"
+                    onClick={handleClickHomepage}
                   >
                     Go back to homepage
                   </button>
                   <button
                     type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                    onClick={() => setOpen(false)}
+                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-300 hover:bg-cyan-600 hover:scale-105 sm:mt-0 sm:w-auto"
+                    onClick={() => toggleModal()}
                     ref={cancelButtonRef}
                   >
-                    Process new employee
+                    Register new employee
                   </button>
                 </div>
               </Dialog.Panel>

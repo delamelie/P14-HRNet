@@ -16,16 +16,7 @@ export default function CreateEmployeeForm() {
   const [startDate, setStartDate] = useState("");
   const [department, setDepartment] = useState("");
   const [state, setState] = useState("");
-
-  // console.log(firstName);
-  // console.log(lastName);
-  // console.log(birthDate);
-  // console.log(street);
-  // console.log(city);
-  // console.log(zipCode);
-  // console.log(startDate);
-  // console.log(department);
-  // console.log(state);
+  const [showModal, setShowModal] = useState(false);
 
   function saveEmployee(e) {
     e.preventDefault();
@@ -40,11 +31,13 @@ export default function CreateEmployeeForm() {
       department &&
       state
     ) {
-      console.log("saved");
+      setShowModal(true);
       resetForm();
-    } else {
-      console.log("something's missing");
     }
+  }
+
+  function toggleModal() {
+    setShowModal(!showModal);
   }
 
   function resetForm() {
@@ -58,11 +51,13 @@ export default function CreateEmployeeForm() {
     setDepartment("");
     setState("");
   }
+
   return (
     <form
       className="sm:mx-20 md:mx-40 lg:mx-60 my-10 pb-4 rounded-md bg-green-50 shadow-lg shadow-gray-400 "
       id="create-employee"
       aria-label="Create a new employee form"
+      onSubmit={saveEmployee}
     >
       <h2 className="flex justify-center py-4 border-b-2 border-b-lime-700 font-bold text-lg text-lime-700">
         New employee
@@ -203,12 +198,12 @@ export default function CreateEmployeeForm() {
         >
           Cancel
         </button>
-        <Button type={"submit"} text={"Save"} onClick={saveEmployee} />
-        {/* {firstName && (
+        <Button type={"submit"} text={"Save"} />
+        {showModal && (
           <div>
-            <Modal />
+            <Modal toggleModal={toggleModal} />
           </div>
-        )} */}
+        )}
       </div>
     </form>
   );
