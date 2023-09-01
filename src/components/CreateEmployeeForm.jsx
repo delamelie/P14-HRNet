@@ -1,4 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import DatePicker from "react-datepicker";
+import { addDays } from "date-fns";
+import "react-datepicker/dist/react-datepicker.css";
+
+import { addEmployee } from "../services/api";
 import states from "../data/states.json";
 import departments from "../data/departments.json";
 import Button from "./Button";
@@ -6,19 +11,28 @@ import Dropdown from "./dropdown/Dropdown";
 import Input from "./Input";
 import Modal from "../components/Modal";
 
+// CSS Modules, react-datepicker-cssmodules.css
+// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+
 export default function CreateEmployeeForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [birthDate, setBirthDate] = useState(null);
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [state, setState] = useState("");
   const [startDate, setStartDate] = useState("");
   const [department, setDepartment] = useState("");
-  const [state, setState] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  function saveEmployee(e) {
+  useEffect(() => {
+    document.title = "Register new employee";
+  }, []);
+
+  async function saveEmployee(e) {
     e.preventDefault();
     if (
       lastName &&
@@ -30,10 +44,28 @@ export default function CreateEmployeeForm() {
       startDate &&
       department &&
       state
-    ) {
-      setShowModal(true);
-      resetForm();
-    }
+    )
+      try {
+        setLoading(true);
+        await addEmployee({
+          firstName,
+          lastName,
+          birthDate,
+          street,
+          city,
+          zipCode,
+          state,
+          department,
+          startDate,
+        });
+        setError(null);
+        setShowModal(true);
+        resetForm();
+      } catch (error) {
+        setError("A server error occurred. Please try again later...");
+      } finally {
+        setLoading(false);
+      }
   }
 
   function toggleModal() {
@@ -93,13 +125,29 @@ export default function CreateEmployeeForm() {
             </div>
 
             <div className="sm:col-span-4">
-              <Input
+              {/* <Input
                 inputName={"birth-date"}
                 field={"Date of birth"}
                 type={"date"}
                 value={birthDate}
                 onChange={(e) => setBirthDate(e.target.value.trim())}
+              /> */}
+
+              <div className="block text-sm leading-6">Date of birth</div>
+              <DatePicker
+                name="birthDate"
+                selected={birthDate}
+                onChange={(date) => setBirthDate(date)}
+                maxDate={addDays(new Date(), 0)}
+                placeholderText="dd/mm/yyyy"
+                dateFormat="dd/MM/yyyy"
+                showIcon={true}
+                showYearDropdown
+                showMonthDropdown
+                required
+                className="indent-1 block w-full rounded py-1 ring-1 ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+              {error && <p>Please provide a value</p>}
             </div>
           </div>
         </fieldset>
@@ -198,7 +246,8 @@ export default function CreateEmployeeForm() {
         >
           Cancel
         </button>
-        <Button type={"submit"} text={"Save"} />
+        <Button type={"submit"} text={loading ? "Loading..." : "Save"} />
+        {error && <p className="text-red-500">{error}</p>}
         {showModal && (
           <div>
             <Modal toggleModal={toggleModal} />

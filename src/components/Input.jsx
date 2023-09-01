@@ -20,6 +20,7 @@ export default function Input({
         value={value}
         onChange={onChange}
         aria-labelledby={inputName}
+        required
         aria-required="true"
         placeholder={name ? `Enter ${name} here` : ""}
         autoComplete={autoComplete}

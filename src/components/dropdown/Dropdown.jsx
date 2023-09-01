@@ -22,6 +22,7 @@ export default function Dropdown({
         autoComplete={autoComplete}
         aria-labelledby={ariaLabelledby}
         aria-required="true"
+        required
         value={value}
         onChange={onChange}
         className="block w-full rounded py-1 ring-1 ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

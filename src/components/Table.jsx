@@ -5,37 +5,26 @@ import { MaterialReactTable } from "material-react-table";
 
 export default function Table() {
   const [employees, setEmployees] = useState([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const getEmployeesData = async () => {
+    document.title = "Employees";
+
+    async function getEmployeesData() {
       try {
         setLoading(true);
         const data = await fetchEmployees();
         setEmployees(data);
-        setLoading(false);
+        setError(null);
       } catch (error) {
-        setError(true);
+        setError("A server error occurred. Please try again later...");
+      } finally {
+        setLoading(false);
       }
-    };
-
+    }
     getEmployeesData();
   }, []);
-
-  ///TEst fetch json
-  // useEffect(() => {
-  //   async function getEmployees() {
-  //     try {
-  //       const data = await fetchEmployees();
-  //       console.log(data);
-  //       setEmployees(data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-  //   getEmployees();
-  // }, []);
 
   const columns = useMemo(
     () => [
@@ -89,54 +78,54 @@ export default function Table() {
     []
   );
 
-  if (error) {
-    return <div>A server error occurred. Please try again later</div>;
-  }
-
   return (
     <section className="flex flex-col justify-center items-center mt-12">
-      <h2 className="font-bold text-lg text-lime-700">Current employees</h2>
       {loading ? (
         <p>Loading...</p>
+      ) : error ? (
+        <div className="text-lg">{error}</div>
       ) : (
-        <MaterialReactTable
-          columns={columns}
-          data={employees}
-          muiTableContainerProps={{
-            sx: {
-              border: "1px solid #ecfccb",
-              borderRadius: "10px",
-              marginBottom: "30px",
-            },
-          }}
-          muiTopToolbarProps={{
-            sx: {
-              //backgroundColor: "#ecfccb",
-            },
-          }}
-          muiTableHeadCellProps={{
-            sx: {
-              backgroundColor: "#ecfccb",
-              borderBottom: "#ecfccb",
-              fontSize: "0.8em",
-            },
-          }}
-          muiTableBodyCellProps={{
-            sx: {
-              fontSize: "0.7em",
-              borderBottom: "1px solid #ecfccb",
-            },
-          }}
-          muiTablePaginationProps={{
-            sx: {
-              backgroundColor: "#ecfccb",
-            },
-          }}
-          enableDensityToggle={false}
-          enableFullScreenToggle={false}
-          positionPagination={"bottom"}
-          enableHiding={false}
-        />
+        <div>
+          <h2 className="font-bold text-lg text-lime-700">Current employees</h2>
+          <MaterialReactTable
+            columns={columns}
+            data={employees}
+            muiTableContainerProps={{
+              sx: {
+                border: "1px solid #ecfccb",
+                borderRadius: "10px",
+                marginBottom: "30px",
+              },
+            }}
+            muiTopToolbarProps={{
+              sx: {
+                //backgroundColor: "#ecfccb",
+              },
+            }}
+            muiTableHeadCellProps={{
+              sx: {
+                backgroundColor: "#ecfccb",
+                borderBottom: "#ecfccb",
+                fontSize: "0.8em",
+              },
+            }}
+            muiTableBodyCellProps={{
+              sx: {
+                fontSize: "0.7em",
+                borderBottom: "1px solid #ecfccb",
+              },
+            }}
+            muiTablePaginationProps={{
+              sx: {
+                backgroundColor: "#ecfccb",
+              },
+            }}
+            enableDensityToggle={false}
+            enableFullScreenToggle={false}
+            positionPagination={"bottom"}
+            enableHiding={false}
+          />
+        </div>
       )}
     </section>
   );

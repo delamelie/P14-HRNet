@@ -1,55 +1,57 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../services/firebase.config";
 
 const collectionRef = collection(db, "employees");
 
 export async function fetchEmployees() {
-  try {
-    const employeesSnapshot = await getDocs(collectionRef);
-    const data = employeesSnapshot.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
-    return data;
-  } catch (error) {
-    console.error("Error fetching employees:", error);
-    throw error;
-  }
+  //const data = await getDocs(collectionRef).docs.map((doc) => ({
+  const snapshot = await getDocs(collectionRef);
+  const data = snapshot.docs.map((doc) => ({
+    ...doc.data(),
+    id: doc.id,
+  }));
+  console.log(data);
+  return data;
 }
 
-///// Test fetch json
-//import axios from "axios";
+export async function addEmployee(newEmployeeData) {
+  await addDoc(collectionRef, newEmployeeData);
+  console.log("Employee added successfully!");
+}
 
-// export const fetchEmployees = () => {
-//   fetch(`../data/employees.json`, {
-//     headers: {
-//       accept: "application/json",
-//       "User-agent": "learning app",
-//     },
-//   })
-//     .then((response) => {
-//       console.log(response.json);
-//       console.log("coucou");
-//       return response.json();
-//     })
-//     .then((data) => {
-//       console.log("yo");
-//       console.log(data);
-//       return data;
-//     })
-//     .catch((error) => {
-//       console.error("error:", error);
-//     });
-// };
-
-// export const fetchEmployees = async () => {
+// export async function fetchEmployees() {
 //   try {
-//     const response = await axios.get("./employees.json");
-//     const data = await response.json();
-
+//     //const data = await getDocs(collectionRef).docs.map((doc) => ({
+//     const snapshot = await getDocs(collectionRef);
+//     const data = snapshot.docs.map((doc) => ({
+//       ...doc.data(),
+//       id: doc.id,
+//     }));
 //     console.log(data);
 //     return data;
 //   } catch (error) {
-//     console.log(error);
+//     console.error("Error fetching employees:", error);
+//     throw error;
 //   }
-// };
+// }
+
+// export async function addEmployee(newEmployeeData) {
+//   try {
+//     await addDoc(collectionRef, newEmployeeData);
+//     console.log("Employee added successfully!");
+//   } catch (error) {
+//     console.error("Error adding employee:", error);
+//     throw error;
+//   }
+// }
+
+//     getDocs(colRef)
+//       .then((snapshot) => {
+//         let employees = [];
+//         snapshot.docs.forEach((doc) => {
+//           employees.push({ ...doc.data(), id: doc.id });
+//         });
+//       })
+//       .catch((error) => {
+//         console.log(error.message);
+//       });
