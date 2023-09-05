@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import Button from "../Button";
+import ButtonNav from "./ButtonNav";
 
 export default function NavBar() {
   const plusIcon = (
@@ -40,14 +40,14 @@ export default function NavBar() {
 
   return (
     <nav
-      className="flex flex-col items-center justify-center gap-y-2 mx-10 gap-x-6 md:flex-row"
+      className="flex items-center justify-center my-8 gap-y-4 mx-10 gap-x-6 sm:flex-col md:flex-row"
       role="navigation"
     >
       <NavLink to="/newEmployee">
-        <Button type={"button"} icon={plusIcon} text={"Create employee"} />
+        <ButtonNav type={"button"} icon={plusIcon} text={"Create employee"} />
       </NavLink>
       <NavLink to="/employees">
-        <Button
+        <ButtonNav
           type={"button"}
           icon={listIcon}
           text={"View current employees"}

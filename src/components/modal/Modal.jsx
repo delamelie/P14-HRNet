@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import "./modal.css";
 
-//// Handles escape tab, traps focus, hide background content, transition, accessibility, responsive
+//// Handles escape tab, traps focus, hide background content, accessibility, responsive
 
 export default function Modal({
   icon,
@@ -13,7 +13,6 @@ export default function Modal({
   const buttonRef = useRef(null);
 
   useEffect(() => {
-    console.log(buttonRef.current);
     buttonRef.current.focus();
   }, []);
 

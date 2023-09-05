@@ -5,7 +5,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { addEmployee } from "../services/api";
 import states from "../data/states.json";
 import departments from "../data/departments.json";
-import Button from "./Button";
 import Dropdown from "./Dropdown";
 import Input from "./Input";
 import Modal from "../components/modal/Modal";
@@ -28,6 +27,7 @@ export default function CreateEmployeeForm() {
 
   useEffect(() => {
     document.title = "Register new employee";
+    inputRef.current.focus();
   }, []);
 
   async function saveEmployee(e) {
@@ -86,7 +86,7 @@ export default function CreateEmployeeForm() {
   return (
     <div>
       <form
-        className="sm:mx-20 md:mx-40 lg:mx-60 my-10 pb-4 rounded-md bg-green-50 shadow-lg shadow-gray-400 "
+        className="my-10 pb-4 rounded-md bg-green-50 shadow-lg shadow-gray-400 sm:mx-20 md:mx-40 lg:mx-60 "
         id="create-employee"
         aria-label="Create a new employee form"
         onSubmit={saveEmployee}
@@ -245,12 +245,19 @@ export default function CreateEmployeeForm() {
         <div className="mt-4 flex items-center justify-end gap-x-6 mx-10">
           <button
             type="button"
-            className="text-sm px-8 py-2 font-semibold leading-6"
+            className="px-8 py-2 font-semibold text-sm leading-6"
             onClick={resetForm}
           >
             Cancel
           </button>
-          <Button type={"submit"} text={loading ? "Loading..." : "Save"} />
+
+          <button
+            type="submit"
+            className="px-8 py-2 font-semibold text-sm text-white rounded-md bg-lime-600 hover:bg-cyan-600 hover:scale-105"
+          >
+            {loading ? "Loading..." : "Save"}
+          </button>
+
           {error && <p className="text-red-500">{error}</p>}
 
           {showModal && (

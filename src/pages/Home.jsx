@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <h2 className="h-screen flex justify-center items-center text-lime-600 text-3xl">
+      <h2 className="w-9/12 m-auto mt-40 text-center text-xl text-lime-600 sm:text-3xl">
         Welcome to your employee file management system
       </h2>
     </div>
