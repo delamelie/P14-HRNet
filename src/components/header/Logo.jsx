@@ -5,9 +5,13 @@ export default function Logo() {
   return (
     <div className="flex items-center">
       <NavLink to="/">
-        <img src={logo} alt="logo" className="w-28 mr-10 ml-10" />
+        <img
+          src={logo}
+          alt="logo"
+          className="w-24 mr-2 ml-10 md:w-28 md:mr-10"
+        />
       </NavLink>
-      <h1 className="text-5xl text-lime-700">HRnet</h1>
+      <h1 className="text-3xl text-lime-700 md:text-5xl">HRnet</h1>
     </div>
   );
 }

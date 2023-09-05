@@ -3,7 +3,6 @@
   position: fixed;
   inset: 0;
   opacity: 0.85;
-  /*transition: opacity 0.3s ease;*/
 }
 
 .modal-container {
@@ -18,7 +17,6 @@
   justify-content: center;
   min-height: 100vh;
   margin: 0 auto;
-  /* transition: 0.3s ease; */
 }
 
 .modal-content {
@@ -41,7 +39,7 @@
   background-color: #d9f99d;
 }
 
-.modal-button {
+.modal-container .modal-button {
   margin: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
@@ -53,51 +51,4 @@
 .modal-button:hover {
   transform: scale(1.05);
   background-color: #0891b2;
-}
-
-/* Animation Classes */
-/* .enter {
-  opacity: 0;
-  transform: translateY(100px);
-}
-
-.enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.leave {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.leave-active {
-  opacity: 0;
-  transform: translateY(100px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-} */
-
- {
-  /* <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        > */
-}
-
- {
-  /* <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            > */
 }

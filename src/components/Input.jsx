@@ -7,6 +7,7 @@ export default function Input({
   autoComplete,
   error,
   onChange,
+  forwardedRef,
 }) {
   return (
     <div>
@@ -25,6 +26,7 @@ export default function Input({
         placeholder={name ? `Enter ${name} here` : ""}
         autoComplete={autoComplete}
         className="indent-1 block w-full rounded py-1 ring-1 ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        ref={forwardedRef}
       />
       {error && <p>Please provide a value</p>}
     </div>

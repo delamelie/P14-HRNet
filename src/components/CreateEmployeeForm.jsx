@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
@@ -23,6 +23,8 @@ export default function CreateEmployeeForm() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const inputRef = useRef(null);
 
   useEffect(() => {
     document.title = "Register new employee";
@@ -76,6 +78,11 @@ export default function CreateEmployeeForm() {
     setState("");
   }
 
+  function closeModal() {
+    setShowModal(false);
+    inputRef.current.focus();
+  }
+
   return (
     <div>
       <form
@@ -102,6 +109,7 @@ export default function CreateEmployeeForm() {
                   autoComplete={"given-name"}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value.trim())}
+                  forwardedRef={inputRef}
                 />
               </div>
 
@@ -137,6 +145,7 @@ export default function CreateEmployeeForm() {
                   showIcon={true}
                   showYearDropdown
                   showMonthDropdown
+                  dropdownMode="select"
                   required
                   className="indent-1 block w-full rounded py-1 ring-1 ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 /> */}
@@ -266,7 +275,9 @@ export default function CreateEmployeeForm() {
                 }
                 message={"Employee created !"}
                 buttonText={"OK"}
-                closeModal={() => setShowModal(!showModal)}
+                // closeModal={() => setShowModal(!showModal)}
+                closeModal={closeModal}
+                ariaLabel={"OK, fermer la fenêtre"}
               />
             </div>
           )}
