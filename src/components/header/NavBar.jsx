@@ -44,14 +44,10 @@ export default function NavBar() {
       role="navigation"
     >
       <NavLink to="/newEmployee">
-        <ButtonNav type={"button"} icon={plusIcon} text={"Create employee"} />
+        <ButtonNav icon={plusIcon} text={"Create employee"} />
       </NavLink>
       <NavLink to="/employees">
-        <ButtonNav
-          type={"button"}
-          icon={listIcon}
-          text={"View current employees"}
-        />
+        <ButtonNav icon={listIcon} text={"View current employees"} />
       </NavLink>
     </nav>
   );

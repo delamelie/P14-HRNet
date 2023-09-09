@@ -86,7 +86,9 @@ export default function Table() {
         <div className="text-lg">{error}</div>
       ) : (
         <div>
-          <h2 className="font-bold text-lg text-lime-700">Current employees</h2>
+          <h2 className="flex justify-center font-bold text-lg text-lime-700">
+            Current employees
+          </h2>
           <MaterialReactTable
             columns={columns}
             data={employees}

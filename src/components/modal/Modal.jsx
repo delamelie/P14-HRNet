@@ -1,14 +1,14 @@
 import { useRef, useEffect } from "react";
 import "./modal.css";
 
-//// Handles escape tab, traps focus, hide background content, accessibility, responsive
-
 export default function Modal({
   icon,
   message,
   buttonText,
   ariaLabel,
   closeModal,
+  buttonStyle,
+  iconStyle,
 }) {
   const buttonRef = useRef(null);
 
@@ -19,24 +19,25 @@ export default function Modal({
   useEffect(() => {
     const buttonElement = buttonRef.current;
 
-    function handleKeyPress(event) {
-      switch (event.key) {
-        case "Tab":
-          event.preventDefault();
-          buttonElement.focus();
-          break;
-        case "Escape":
-          closeModal();
-          break;
-        default:
-          break;
+    function handleTabKeyPress(event) {
+      if (event.key === "Tab") {
+        event.preventDefault();
+        buttonElement.focus();
       }
     }
 
-    buttonElement.addEventListener("keydown", handleKeyPress);
+    function handleEscKeyPress(event) {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    }
+
+    buttonElement.addEventListener("keydown", handleTabKeyPress);
+    buttonElement.addEventListener("keydown", handleEscKeyPress);
 
     return () => {
-      buttonElement.removeEventListener("keydown", handleKeyPress);
+      buttonElement.removeEventListener("keydown", handleTabKeyPress);
+      buttonElement.removeEventListener("keydown", handleEscKeyPress);
     };
   }, [closeModal]);
 
@@ -47,7 +48,9 @@ export default function Modal({
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-title">
-              <div className="modal-icon">{icon}</div>
+              <div className="modal-icon" style={iconStyle}>
+                {icon}
+              </div>
               <h3 className="modal-message" id="dialog_label">
                 {message}
               </h3>
@@ -59,6 +62,7 @@ export default function Modal({
               ref={buttonRef}
               aria-label={ariaLabel}
               onClick={closeModal}
+              style={buttonStyle}
             >
               {buttonText}
             </button>

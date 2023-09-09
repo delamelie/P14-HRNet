@@ -7,7 +7,7 @@ export default function Logo() {
       <NavLink to="/">
         <img
           src={logo}
-          alt="logo"
+          alt="Company logo, link to the homepage"
           className="w-24 mr-2 ml-10 md:w-28 lg:mr-10"
         />
       </NavLink>
@@ -15,7 +15,3 @@ export default function Logo() {
     </div>
   );
 }
-
-// const Title = styled.h1`
-//   color: #6d8412;
-// `;
