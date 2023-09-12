@@ -1,43 +1,3 @@
-// export default function Dropdown({
-//   label,
-//   name,
-//   id,
-//   ariaLabelledby,
-//   fieldName,
-//   options,
-//   value,
-//   onChange,
-//   error,
-// }) {
-//   return (
-//     <div className="sm:col-span-2">
-//       <label htmlFor={label} className="block text-sm leading-6">
-//         {fieldName}
-//       </label>
-
-//       <select
-//         name={name}
-//         id={id}
-//         aria-labelledby={ariaLabelledby}
-//         aria-required="true"
-//         required
-//         value={value}
-//         onChange={onChange}
-//         className="block w-full rounded h-8 py-1 ring-1 ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-//       >
-//         <option value="">Choose an option</option>
-
-//         {options.map((option, index) => (
-//           <option key={index} value={option.name}>
-//             {option.name}
-//           </option>
-//         ))}
-//       </select>
-//       {error && <p>Please provide a value</p>}
-//     </div>
-//   );
-// }
-
 import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
@@ -46,14 +6,17 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Dropdown({ fieldName, options, value, onChange }) {
+export default function Dropdown({
+  onChange,
+  fieldName,
+  options,
+  value,
+  error,
+}) {
   const [selected, setSelected] = useState(value);
-  console.log(selected.name);
-  console.log(selected);
 
   return (
-    // <Listbox value={selected} onChange={setSelected}>
-    <Listbox value={value} onChange={onChange}>
+    <Listbox value={selected} onChange={onChange} role="combobox">
       {({ open }) => (
         <>
           <div className="sm:col-span-2">
@@ -61,9 +24,9 @@ export default function Dropdown({ fieldName, options, value, onChange }) {
               {fieldName}
             </Listbox.Label>
             <div className="relative">
-              <Listbox.Button className="block w-full cursor-default rounded bg-white h-8 ring-1 ring-gray-300 focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
-                <span className="indent-1 flex items-center truncate">
-                  {selected.name || "Choose an option"}{" "}
+              <Listbox.Button className="block w-full cursor-default rounded bg-white h-8 ring-1 ring-gray-300 focus:ring-2 focus:ring-inset focus:outline-none focus:ring-cyan-600 sm:text-sm sm:leading-6">
+                <span className="w-4/5 indent-1 flex items-center truncate">
+                  {value ? value : "Choose an option"}
                 </span>
 
                 <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -87,14 +50,14 @@ export default function Dropdown({ fieldName, options, value, onChange }) {
                       key={index}
                       className={({ active }) =>
                         classNames(
-                          active ? "bg-indigo-600 text-white" : "text-gray-900",
+                          active ? "bg-cyan-600 text-white" : "text-gray-900",
                           "relative cursor-default select-none py-2 pl-3 pr-9"
                         )
                       }
                       value={option}
                       onChange={setSelected}
                     >
-                      {({ selected, active }) => (
+                      {({ selected }) => (
                         <>
                           <span
                             className={classNames(
@@ -112,6 +75,7 @@ export default function Dropdown({ fieldName, options, value, onChange }) {
               </Transition>
             </div>
           </div>
+          {error && <p>Please provide a value</p>}
         </>
       )}
     </Listbox>

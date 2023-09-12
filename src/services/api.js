@@ -3,21 +3,22 @@ import { db } from "../services/firebase.config";
 
 const collectionRef = collection(db, "employees");
 
-export async function fetchEmployees() {
+const fetchEmployees = async () => {
   //const data = await getDocs(collectionRef).docs.map((doc) => ({
   const snapshot = await getDocs(collectionRef);
   const data = snapshot.docs.map((doc) => ({
     ...doc.data(),
     id: doc.id,
   }));
-  console.log(data);
   return data;
-}
+};
+export { fetchEmployees };
 
-export async function addEmployee(newEmployeeData) {
+const addEmployee = async (newEmployeeData) => {
   await addDoc(collectionRef, newEmployeeData);
   console.log("Employee added successfully!");
-}
+};
+export { addEmployee };
 
 // export async function fetchEmployees() {
 //   try {

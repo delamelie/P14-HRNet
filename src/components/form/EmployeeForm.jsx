@@ -2,16 +2,14 @@ import { useState, useEffect, useRef } from "react";
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
-import { addEmployee } from "../services/api";
-import states from "../data/states.json";
-import departments from "../data/departments.json";
+import { Modal } from "react-custom-accessible-modal";
+import { addEmployee } from "../../services/api";
+import states from "../../data/states.json";
+import departments from "../../data/departments.json";
 import Dropdown from "./Dropdown";
 import Input from "./Input";
-import Modal from "../components/modal/Modal";
 
-//import Modal from "react-simple-accessible-modal";
-
-export default function CreateEmployeeForm() {
+export default function EmployeeForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [birthDate, setBirthDate] = useState("");
@@ -24,7 +22,6 @@ export default function CreateEmployeeForm() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -32,7 +29,7 @@ export default function CreateEmployeeForm() {
     inputRef.current.focus();
   }, []);
 
-  async function saveEmployee(e) {
+  const saveEmployee = async (e) => {
     e.preventDefault();
     if (
       lastName &&
@@ -66,7 +63,7 @@ export default function CreateEmployeeForm() {
       } finally {
         setLoading(false);
       }
-  }
+  };
 
   const resetForm = () => {
     setFirstName("");
@@ -85,23 +82,24 @@ export default function CreateEmployeeForm() {
     inputRef.current.focus();
   };
 
-  const handleDateChange = (selectedDate) => {
-    const formattedDate = new Date(selectedDate).toLocaleDateString("en-GB");
-    //setBirthDate(formattedDate);
-    //setBirthDate(selectedDate);
-    console.log(selectedDate);
-    console.log(selectedDate);
-    console.log(formattedDate);
-  };
+  // const handleDateChange = (selectedDate) => {
+  //   const formattedDate = new Date(selectedDate).toLocaleDateString("en-GB");
+
+  //   //setBirthDate(formattedDate);
+  //   //setBirthDate(selectedDate);
+  //   console.log(selectedDate);
+
+  //   console.log(formattedDate);
+  // };
 
   return (
     <form
-      className="my-10 pb-4 rounded-md bg-green-50 shadow-lg shadow-gray-400 sm:mx-20 md:mx-40 lg:mx-60 "
+      className="create-employee my-10 pb-4 rounded-md bg-green-50 shadow-lg shadow-gray-400 sm:mx-20 md:mx-40 lg:mx-60 "
       id="create-employee"
       aria-label="Create a new employee form"
       onSubmit={saveEmployee}
     >
-      <h2 className="flex justify-center py-4 border-b-2 border-b-lime-700 font-bold text-lg text-lime-700">
+      <h2 className="text-center py-4 border-b-2 border-b-lime-600 font-bold text-lg text-lime-600">
         New employee
       </h2>
       <div className="border-b-2 border-dotted pb-6">
@@ -147,11 +145,15 @@ export default function CreateEmployeeForm() {
                   console.log(birthDate);
                 }}
               />
-              <div className="block text-sm leading-6">Date of birth</div>
-              {/* <DatePicker
+              {/* <div className="block text-sm leading-6">Date of birth</div>
+              <DatePicker
                 name="birthDate"
                 selected={birthDate}
                 //onChange={(date) => setBirthDate(date)}
+                // onChange={(date) =>
+                //     setBirthDate(new Date(date).toLocaleString())
+                //   }
+
                 onChange={handleDateChange}
                 maxDate={new Date()}
                 placeholderText="dd/mm/yyyy"
@@ -198,10 +200,6 @@ export default function CreateEmployeeForm() {
             </div>
 
             <Dropdown
-              // label={"state"}
-              // name={"state"}
-              // id={"state"}
-              // ariaLabelledby={"state"}
               fieldName={"State"}
               options={states}
               value={state}
@@ -242,10 +240,6 @@ export default function CreateEmployeeForm() {
             </div>
 
             <Dropdown
-              // label={"department"}
-              // name={"department"}
-              // id={"department"}
-              // ariaLabelledby={"department"}
               fieldName={"Department"}
               options={departments}
               value={department}
@@ -297,11 +291,7 @@ export default function CreateEmployeeForm() {
               message={"Employee created !"}
               buttonText={"OK"}
               closeModal={closeModal}
-              //closeModal={() => setShowModal(false)}
               ariaLabel={"OK, close modal"}
-              //buttonStyle={myButtonStyle}
-              //           iconStyle={myIconStyle}
-              //           messageStyle={myMessageStyle}
             />
           </div>
         )}

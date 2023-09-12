@@ -25,7 +25,7 @@ export default function Input({
         aria-required="true"
         placeholder={name ? `Enter ${name} here` : ""}
         autoComplete={autoComplete}
-        className="indent-1 block w-full rounded py-1 ring-1 ring-gray-300 focus:ring-2 focus:ring-inset focus:outline-none focus:ring-indigo-500 sm:text-sm sm:leading-6"
+        className="indent-1 block w-full rounded py-1 ring-1 ring-gray-300 focus:ring-2 focus:ring-inset focus:outline-none focus:ring-cyan-600 sm:text-sm sm:leading-6"
         ref={forwardedRef}
       />
       {error && <p>Please provide a value</p>}

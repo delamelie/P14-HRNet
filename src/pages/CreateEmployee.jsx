@@ -1,11 +1,11 @@
 import Header from "../components/header/Header";
-import CreateEmployeeForm from "../components/CreateEmployeeForm";
+import EmployeeForm from "../components/form/EmployeeForm";
 
 export default function CreateEmployee() {
   return (
     <div>
       <Header />
-      <CreateEmployeeForm />
+      <EmployeeForm />
     </div>
   );
 }

@@ -1,19 +1,19 @@
 //import employees from "../data/employees.json";
-import { fetchEmployees } from "../services/api";
+import { fetchEmployees } from "../../services/api";
 import { useEffect, useState, useMemo } from "react";
 import { MaterialReactTable } from "material-react-table";
+import Loader from "./Loader";
 
 export default function Table() {
   const [employees, setEmployees] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title = "Employees";
 
-    async function getEmployeesData() {
+    const getEmployeesData = async () => {
       try {
-        setLoading(true);
         const data = await fetchEmployees();
         setEmployees(data);
         setError(null);
@@ -22,7 +22,7 @@ export default function Table() {
       } finally {
         setLoading(false);
       }
-    }
+    };
     getEmployeesData();
   }, []);
 
@@ -81,12 +81,12 @@ export default function Table() {
   return (
     <section className="flex flex-col justify-center items-center mt-12">
       {loading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : error ? (
         <div className="text-lg">{error}</div>
       ) : (
         <div>
-          <h2 className="flex justify-center font-bold text-lg text-lime-700">
+          <h2 className="text-center font-bold text-lg text-lime-600">
             Current employees
           </h2>
           <MaterialReactTable

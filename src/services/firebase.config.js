@@ -13,16 +13,3 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 export const db = getFirestore();
-
-//const colRef = collection(db, "employees");
-
-//     getDocs(colRef)
-//       .then((snapshot) => {
-//         let employees = [];
-//         snapshot.docs.forEach((doc) => {
-//           employees.push({ ...doc.data(), id: doc.id });
-//         });
-//       })
-//       .catch((error) => {
-//         console.log(error.message);
-//       });

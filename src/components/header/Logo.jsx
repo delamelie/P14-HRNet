@@ -11,7 +11,7 @@ export default function Logo() {
           className="w-24 mr-2 ml-10 md:w-28 lg:mr-10"
         />
       </NavLink>
-      <h1 className="text-2xl text-lime-700 sm:text-3xl lg:text-5xl">HRnet</h1>
+      <h1 className="text-2xl text-lime-600 sm:text-3xl lg:text-5xl">HRnet</h1>
     </div>
   );
 }
