@@ -10,6 +10,7 @@ const fetchEmployees = async () => {
     ...doc.data(),
     id: doc.id,
   }));
+  console.log(data);
   return data;
 };
 export { fetchEmployees };

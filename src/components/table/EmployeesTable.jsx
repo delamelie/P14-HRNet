@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { MaterialReactTable } from "material-react-table";
 import Loader from "./Loader";
 
-export default function Table() {
+export default function EmployeesTable() {
   const [employees, setEmployees] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);

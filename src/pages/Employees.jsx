@@ -1,11 +1,11 @@
 import Header from "../components/header/Header";
-import Table from "../components/employeesTable/Table";
+import EmployeesTable from "../components/table/EmployeesTable";
 
 export default function Employees() {
   return (
     <>
       <Header />
-      <Table />
+      <EmployeesTable />
     </>
   );
 }

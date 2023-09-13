@@ -1,6 +1,11 @@
+import { useEffect } from "react";
 import Header from "../components/header/Header";
 
 export default function Home() {
+  useEffect(() => {
+    document.title = "HRnet - Home";
+  }, []);
+
   return (
     <>
       <Header />
