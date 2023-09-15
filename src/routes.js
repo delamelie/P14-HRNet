@@ -7,14 +7,14 @@ import {
 
 import Home from "./pages/Home";
 import CreateEmployee from "./pages/CreateEmployee";
-import Employees from "./pages/Employees";
+import EmployeesList from "./pages/EmployeesList";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route index element={<Home />} />
       <Route path="/newEmployee" element={<CreateEmployee />} />
-      <Route path="/employees" element={<Employees />} />
+      <Route path="/employees" element={<EmployeesList />} />
     </Route>
   )
 );

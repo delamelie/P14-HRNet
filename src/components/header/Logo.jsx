@@ -8,6 +8,7 @@ export default function Logo() {
         <img
           src={logo}
           alt="Company logo, link to the homepage"
+          aria-label="Link to the homepage"
           className="w-24 mr-2 ml-10 md:w-28 lg:mr-10"
         />
       </NavLink>

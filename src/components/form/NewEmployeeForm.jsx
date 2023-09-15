@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import { Modal } from "react-custom-accessible-modal";
 import { addEmployee } from "../../services/api";
@@ -10,51 +9,21 @@ import departments from "../../data/departments.json";
 import Dropdown from "./Dropdown";
 import Input from "./Input";
 
-// export default function EmployeeForm() {
-
-//   const [birthDate, setBirthDate] = useState("");
 //   const [state, setState] = useState("");
-//   const [startDate, setStartDate] = useState("");
 //   const [department, setDepartment] = useState("");
 
-//   // const handleDateChange = (selectedDate) => {
-//   //   const formattedDate = new Date(selectedDate).toLocaleDateString("en-GB");
-//   //   //setBirthDate(formattedDate);
-//   //   //setBirthDate(selectedDate);
-//   //   console.log(selectedDate);
-//   //   console.log(formattedDate);
-//   // };
-
-//               <DatePicker
-//                 name="birthDate"
-//                 selected={birthDate}
-//                 //onChange={(date) => setBirthDate(date)}
-//                 // onChange={(date) =>
-//                 //     setBirthDate(new Date(date).toLocaleString())
-//                 //   }
-//                 onChange={handleDateChange}
-//                 maxDate={new Date()}
-//                 placeholderText="dd/mm/yyyy"
-//                 dateFormat="dd/MM/yyyy"
-//                 showYearDropdown
-//                 showMonthDropdown
-//                 dropdownMode="select"
-//                 required
-//                 className="indent-1 block w-full rounded py-1 ring-1 ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-//               /> */}
-
-export default function EmployeeForm() {
+export default function NewEmployeeForm() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  //const inputRef = useRef(null);
 
   const {
     register,
     handleSubmit,
     setFocus,
-    formState: { errors },
     reset,
+    control,
+    formState: { errors },
   } = useForm();
 
   const namesPattern = /^([a-zA-Z-' ]+)$/;
@@ -104,12 +73,9 @@ export default function EmployeeForm() {
     setFocus("firstName");
   }, []);
 
-  const closeModal = () => {
-    setShowModal(false);
-    setFocus("firstName");
-  };
-
   const handleRegistration = async (data) => {
+    console.log(data.department);
+
     if (data)
       try {
         setLoading(true);
@@ -118,24 +84,30 @@ export default function EmployeeForm() {
         setShowModal(true);
         reset();
       } catch (error) {
+        console.error(error);
         setError("A server error occurred. Please try again later.");
       } finally {
         setLoading(false);
       }
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+    setFocus("firstName");
+  };
+
   return (
     <form
       onSubmit={handleSubmit(handleRegistration)}
-      className="create-employee my-10 pb-4 rounded-md bg-green-50 shadow-lg shadow-gray-400 sm:mx-20 md:mx-40 lg:mx-60 "
+      className="create-employee my-10 pb-4 rounded-md bg-stone-100 shadow-lg shadow-gray-400 mx-10 lg:mx-28 xl:mx-60 2xl:mx-72"
       id="create-employee"
       aria-label="Create a new employee form"
     >
-      <h2 className="text-center py-4 border-b-2 border-b-lime-600 font-bold text-lg text-lime-600">
+      <h2 className="text-center py-4 border-b-2 border-b-lime-600 font-bold text-lg text-lime-700">
         New employee
       </h2>
 
-      <div className="border-b-2 border-dotted pb-6">
+      <div className="border-b-2 pb-6 border-dotted">
         <fieldset className="mx-10 ">
           <legend className="text-base font-semibold leading-10">
             Personal Information
@@ -144,7 +116,7 @@ export default function EmployeeForm() {
             <div className="sm:col-span-3">
               <Input
                 name="firstName"
-                inputName={"first-name"}
+                inputName="first-name"
                 label="First name"
                 type="text"
                 autoComplete="off"
@@ -152,14 +124,13 @@ export default function EmployeeForm() {
                 register={register}
                 errors={errors}
                 registerOptions={registerOptions.firstName}
-                //forwardedRef={inputRef}
               />
             </div>
 
             <div className="sm:col-span-3">
               <Input
                 name="lastName"
-                inputName={"last-name"}
+                inputName="last-name"
                 label="Last name"
                 type="text"
                 autoComplete="off"
@@ -170,29 +141,48 @@ export default function EmployeeForm() {
               />
             </div>
 
-            <div className="sm:col-span-4">
-              <Input
+            <div className="flex flex-col sm:col-span-4">
+              <label htmlFor="birth-date" className="block text-sm leading-6">
+                Date of birth
+              </label>
+
+              <Controller
+                control={control}
                 name="birthDate"
-                inputName={"birth-date"}
-                label="Date of birth"
-                type="date"
-                register={register}
-                errors={errors}
-                registerOptions={registerOptions.birthDate}
+                rules={registerOptions.birthDate}
+                render={({ field }) => (
+                  <DatePicker
+                    name="birthDate"
+                    onChange={(birthDate) => field.onChange(birthDate)}
+                    selected={field.value}
+                    maxDate={new Date()}
+                    placeholderText="dd/mm/yyyy"
+                    dateFormat="dd/MM/yyyy"
+                    showYearDropdown
+                    showMonthDropdown
+                    dropdownMode="select"
+                    className="indent-1 block w-full rounded py-1 ring-1 ring-gray-300 focus:ring-2 focus:ring-inset focus:outline-none focus:ring-cyan-600 sm:text-sm sm:leading-6"
+                  />
+                )}
               />
+              {errors.birthDate && (
+                <small className="text-danger text-red-500">
+                  {errors.birthDate.message}
+                </small>
+              )}
             </div>
           </div>
         </fieldset>
       </div>
 
-      <div className="border-b-2 border-dotted pb-6">
+      <div className="pb-6 border-b-2 border-dotted">
         <fieldset className="mx-10">
           <legend className="text-base font-semibold leading-7">Address</legend>
-          <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-6">
+          <div className="grid grid-cols-1 gap-y-2 mt-3 md:gap-x-6 md:grid-cols-6">
             <div className="col-span-full">
               <Input
                 name="street"
-                inputName={"street"}
+                inputName="street"
                 label="Street"
                 type="text"
                 autoComplete="off"
@@ -203,7 +193,7 @@ export default function EmployeeForm() {
               />
             </div>
 
-            <div className="sm:col-span-2 sm:col-start-1">
+            <div className="sm:col-span-2">
               <Input
                 name="city"
                 inputName="city"
@@ -219,10 +209,10 @@ export default function EmployeeForm() {
 
             <div className="sm:col-span-2">
               <Input
-                name={"zipCode"}
-                inputName={"postal-code"}
-                label={"ZIP code"}
-                type={"text"}
+                name="zipCode"
+                inputName="postal-code"
+                label="ZIP code"
+                type="text"
                 autoComplete="off"
                 //autoComplete={"postal-code"}
                 register={register}
@@ -232,40 +222,57 @@ export default function EmployeeForm() {
             </div>
 
             <Dropdown
-              dropdownName="state"
-              name={"state"}
-              label={"State"}
+              label="State"
+              name="state"
+              options={states}
               register={register}
               errors={errors}
               registerOptions={registerOptions.state}
-              options={states}
             />
           </div>
         </fieldset>
       </div>
 
-      <div className="border-b-2 border-dotted pb-6">
+      <div className="pb-6 border-b-2 border-dotted">
         <fieldset className="mx-10">
           <legend className="text-base font-semibold leading-7">
             Internal information
           </legend>
-          <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-6">
-            <div className="sm:col-span-2 sm:col-start-1">
-              <Input
+          <div className="grid gap-x-6 gap-y-2 mt-3 sm:grid-cols-6">
+            <div className="flex flex-col sm:col-span-3 md:col-span-2">
+              <label htmlFor="birth-date" className="block text-sm leading-6">
+                Start date
+              </label>
+
+              <Controller
+                control={control}
                 name="startDate"
-                inputName={"start-date"}
-                label="Start date"
-                type="date"
-                register={register}
-                errors={errors}
-                registerOptions={registerOptions.startDate}
+                rules={registerOptions.startDate}
+                render={({ field }) => (
+                  <DatePicker
+                    name="startDate"
+                    onChange={(startDate) => field.onChange(startDate)}
+                    selected={field.value}
+                    maxDate={new Date()}
+                    placeholderText="dd/mm/yyyy"
+                    dateFormat="dd/MM/yyyy"
+                    showYearDropdown
+                    showMonthDropdown
+                    dropdownMode="select"
+                    className="indent-1 block w-full rounded py-1 ring-1 ring-gray-300 focus:ring-2 focus:ring-inset focus:outline-none focus:ring-cyan-600 sm:text-sm sm:leading-6 "
+                  />
+                )}
               />
+              {errors.startDate && (
+                <small className="text-danger text-red-500">
+                  {errors.startDate.message}
+                </small>
+              )}
             </div>
 
             <Dropdown
-              dropdownName="department"
-              name={"department"}
-              label={"Department"}
+              name="department"
+              label="Department"
               register={register}
               errors={errors}
               registerOptions={registerOptions.department}
@@ -277,7 +284,7 @@ export default function EmployeeForm() {
 
       {error && <div className="mx-10 mt-4 text-red-500">{error}</div>}
 
-      <div className="mt-4 flex items-center justify-end gap-x-6 mx-10">
+      <div className="flex items-center justify-end gap-x-6 mx-10 mt-4 ">
         <button
           type="button"
           className="px-8 py-2 font-semibold text-sm leading-6"
@@ -313,10 +320,10 @@ export default function EmployeeForm() {
                   />
                 </svg>
               }
-              message={"Employee created !"}
-              buttonText={"OK"}
+              message="Employee created !"
+              buttonText="OK"
               closeModal={closeModal}
-              ariaLabel={"OK, close modal"}
+              ariaLabel="OK, close modal"
             />
           </div>
         )}
@@ -358,23 +365,6 @@ export default function EmployeeForm() {
 //     document.title = "Register new employee";
 //     inputRef.current.focus();
 //   }, []);
-
-//   ///// Validation test
-
-//   // const test = (e) => {
-//   //   setFirstName(e.target.value.trim());
-//   //   const namesPattern = /^([a-zA-Z-' ]+)$/;
-//   //   if (namesPattern.test(firstName)) {
-//   //     setFirstNameError("");
-//   //     setFirstName(e.target.value.trim());
-//   //     return;
-//   //   } else {
-//   //     setFirstNameError("*Wrong format");
-//   //     return;
-//   //   }
-//   // };
-
-//   ///////////////////////////////
 
 //   const saveEmployee = async (e) => {
 //     e.preventDefault();

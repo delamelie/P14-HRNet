@@ -85,8 +85,8 @@ export default function EmployeesTable() {
       ) : error ? (
         <div className="text-lg">{error}</div>
       ) : (
-        <div>
-          <h2 className="text-center font-bold text-lg text-lime-600">
+        <div className="responsive-table w-11/12">
+          <h2 className="text-center font-bold text-xl text-lime-600">
             Current employees
           </h2>
           <MaterialReactTable
@@ -97,11 +97,6 @@ export default function EmployeesTable() {
                 border: "1px solid #ecfccb",
                 borderRadius: "10px",
                 marginBottom: "30px",
-              },
-            }}
-            muiTopToolbarProps={{
-              sx: {
-                //backgroundColor: "#ecfccb",
               },
             }}
             muiTableHeadCellProps={{

@@ -40,7 +40,7 @@ export default function NavBar() {
 
   return (
     <nav
-      className="flex items-center justify-center my-8 gap-y-4 mx-10 gap-x-6 sm:flex-col md:flex-row"
+      className="flex items-center justify-center my-8 gap-y-4 mx-10 gap-x-6 flex-col sm:flex-row"
       role="navigation"
     >
       <NavLink to="/newEmployee">
