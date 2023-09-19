@@ -56,10 +56,15 @@ export default function Dropdown({
 }) {
   const [selected, setSelected] = useState("");
 
+  console.log(selected.name);
   console.log(selected);
 
   return (
-    <Listbox value={selected.name} onChange={setSelected} role="combobox">
+    <Listbox
+      value={selected}
+      onChange={(newValue) => setSelected(newValue)}
+      role="combobox"
+    >
       {({ open }) => (
         <>
           <div className="sm:col-span-2">
@@ -91,13 +96,13 @@ export default function Dropdown({
                   {options.map((option, index) => (
                     <Listbox.Option
                       key={index}
+                      value={option}
                       className={({ active }) =>
                         classNames(
                           active ? "bg-cyan-600 text-white" : "text-gray-900",
                           "relative cursor-default select-none py-2 pl-3 pr-9"
                         )
                       }
-                      value={option}
                       {...register(name, registerOptions)}
                     >
                       {({ selected, active }) => (

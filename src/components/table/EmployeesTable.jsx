@@ -1,5 +1,5 @@
 //import employees from "../data/employees.json";
-import { fetchEmployees } from "../../services/api";
+import { getEmployees } from "../../services/api";
 import { useEffect, useState, useMemo } from "react";
 import { MaterialReactTable } from "material-react-table";
 import Loader from "./Loader";
@@ -14,7 +14,7 @@ export default function EmployeesTable() {
 
     const getEmployeesData = async () => {
       try {
-        const data = await fetchEmployees();
+        const data = await getEmployees();
         setEmployees(data);
         setError(null);
       } catch (error) {

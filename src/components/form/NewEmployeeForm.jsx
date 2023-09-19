@@ -74,11 +74,12 @@ export default function NewEmployeeForm() {
   }, []);
 
   const handleRegistration = async (data) => {
-    console.log(data.department);
+    console.log(data);
 
     if (data)
       try {
         setLoading(true);
+
         await addEmployee(data);
         setError(null);
         setShowModal(true);
@@ -192,7 +193,6 @@ export default function NewEmployeeForm() {
                 registerOptions={registerOptions.street}
               />
             </div>
-
             <div className="sm:col-span-2">
               <Input
                 name="city"
@@ -206,7 +206,6 @@ export default function NewEmployeeForm() {
                 registerOptions={registerOptions.city}
               />
             </div>
-
             <div className="sm:col-span-2">
               <Input
                 name="zipCode"
@@ -220,7 +219,6 @@ export default function NewEmployeeForm() {
                 registerOptions={registerOptions.zipCode}
               />
             </div>
-
             <Dropdown
               label="State"
               name="state"
@@ -229,6 +227,25 @@ export default function NewEmployeeForm() {
               errors={errors}
               registerOptions={registerOptions.state}
             />
+
+            {/* <Controller
+              control={control}
+              name="state"
+              rules={registerOptions.state}
+              render={({ field }) => (
+                <Dropdown
+                  defaultValue={field}
+                  onChange={(state) => field.onChange(state)}
+                  label="State"
+                  name="state"
+                  options={states}
+                  selected={field.value}
+                  register={register}
+                  errors={errors}
+                  registerOptions={registerOptions.state}
+                />
+              )}
+            /> */}
           </div>
         </fieldset>
       </div>
