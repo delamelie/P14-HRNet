@@ -5,7 +5,7 @@ import { MaterialReactTable } from "material-react-table";
 import Loader from "./Loader";
 
 export default function EmployeesTable() {
-  const [employees, setEmployees] = useState([]);
+  // const [employees, setEmployees] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -16,6 +16,7 @@ export default function EmployeesTable() {
       try {
         //const data = await getEmployees();
         //setEmployees(data);
+        //setEmployees(employees);
         setError(null);
       } catch (error) {
         setError("A server error occurred. Please try again later...");
