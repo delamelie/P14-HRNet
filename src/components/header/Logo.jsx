@@ -7,6 +7,8 @@ export default function Logo() {
       <NavLink to="/">
         <img
           src={logo}
+          width="640"
+          height="360"
           alt="Company logo, link to the homepage"
           aria-label="Link to the homepage"
           className="w-24 h-auto mr-2 ml-10 md:w-28 lg:mr-10"
