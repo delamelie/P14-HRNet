@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Modal } from "react-custom-accessible-modal";
-import { addEmployee } from "../../services/api";
+//import { addEmployee } from "../../services/api";
 import states from "../../data/states.json";
 import departments from "../../data/departments.json";
 import Dropdown from "./Dropdown";
@@ -79,7 +79,7 @@ export default function NewEmployeeForm() {
     if (data)
       try {
         setLoading(true);
-        await addEmployee(data);
+        // await addEmployee(data);
         setError(null);
         setShowModal(true);
         reset();
@@ -99,7 +99,7 @@ export default function NewEmployeeForm() {
   return (
     <form
       onSubmit={handleSubmit(handleRegistration)}
-      className="create-employee my-10 pb-4 rounded-md bg-stone-100 shadow-lg shadow-gray-400 mx-10 lg:mx-28 xl:mx-60 2xl:mx-72"
+      className="create-employee my-10 pb-4 rounded-md bg-stone-100 shadow-lg shadow-gray-400 mx-10 xl:mx-60"
       id="create-employee"
       aria-label="Create a new employee form"
     >
