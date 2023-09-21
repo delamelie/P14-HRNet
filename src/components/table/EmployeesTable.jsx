@@ -1,11 +1,10 @@
-import employees from "../../data/employees.json";
-//import { getEmployees } from "../../services/api";
+//import employees from "../../data/employees.json";
+import { getEmployees } from "../../services/api";
 import { useEffect, useState, useMemo } from "react";
 import { MaterialReactTable } from "material-react-table";
-import Loader from "./Loader";
 
 export default function EmployeesTable() {
-  //const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -14,8 +13,8 @@ export default function EmployeesTable() {
 
     const getEmployeesData = async () => {
       try {
-        //const data = await getEmployees();
-        //setEmployees(data);
+        const data = await getEmployees();
+        setEmployees(data);
         setError(null);
       } catch (error) {
         setError("A server error occurred. Please try again later...");
@@ -80,9 +79,7 @@ export default function EmployeesTable() {
 
   return (
     <section className="flex flex-col justify-center items-center mt-12">
-      {loading ? (
-        <Loader />
-      ) : error ? (
+      {error ? (
         <div className="text-lg">{error}</div>
       ) : (
         <div className="responsive-table w-11/12">
@@ -117,10 +114,18 @@ export default function EmployeesTable() {
                 backgroundColor: "#ecfccb",
               },
             }}
-            enableDensityToggle={false}
-            enableFullScreenToggle={false}
+            muiLinearProgressProps={({ isTopToolbar }) => ({
+              sx: {
+                display: isTopToolbar ? "block" : "none",
+              },
+            })}
+            state={{
+              showProgressBars: loading,
+            }}
+            muiSearchTextFieldProps={{
+              placeholder: "Search employees",
+            }}
             positionPagination={"bottom"}
-            enableHiding={false}
           />
         </div>
       )}
