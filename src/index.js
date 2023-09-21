@@ -6,7 +6,7 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Suspense fallback={null}>
+    <Suspense fallback={<span>Loading...</span>}>
       <RouterProvider router={router} />
     </Suspense>
   </React.StrictMode>
