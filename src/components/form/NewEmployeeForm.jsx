@@ -79,7 +79,6 @@ export default function NewEmployeeForm() {
     if (data)
       try {
         setLoading(true);
-
         await addEmployee(data);
         setError(null);
         setShowModal(true);
