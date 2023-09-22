@@ -24,6 +24,12 @@ const getEmployees = async () => {
 };
 export { getEmployees };
 
+const addEmployee = async (newEmployeeData) => {
+  await addDoc(collectionRef, newEmployeeData);
+  console.log("Employee added successfully!");
+};
+export { addEmployee };
+
 // const getEmployees = async () => {
 //   const data = await getDocs(collectionRef).docs.map((doc) => ({
 //     // const snapshot = await getDocs(collectionRef);
@@ -37,12 +43,6 @@ export { getEmployees };
 //   return data;
 // };
 // export { getEmployees };
-
-const addEmployee = async (newEmployeeData) => {
-  await addDoc(collectionRef, newEmployeeData);
-  console.log("Employee added successfully!");
-};
-export { addEmployee };
 
 // export async function addEmployee(newEmployeeData) {
 //   try {

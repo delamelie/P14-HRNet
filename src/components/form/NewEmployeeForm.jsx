@@ -218,16 +218,16 @@ export default function NewEmployeeForm() {
                 registerOptions={registerOptions.zipCode}
               />
             </div>
-            <Dropdown
+            {/* <Dropdown
               label="State"
               name="state"
               options={states}
               register={register}
               errors={errors}
               registerOptions={registerOptions.state}
-            />
+            /> */}
 
-            {/* <Controller
+            <Controller
               control={control}
               name="state"
               rules={registerOptions.state}
@@ -244,7 +244,7 @@ export default function NewEmployeeForm() {
                   registerOptions={registerOptions.state}
                 />
               )}
-            /> */}
+            />
           </div>
         </fieldset>
       </div>
