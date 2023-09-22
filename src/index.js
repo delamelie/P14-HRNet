@@ -4,18 +4,12 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes.js";
 import "./index.css";
 
-// const Loader = lazy(() => import("./components/table/Loader"));
-
-// ReactDOM.createRoot(document.getElementById("root")).render(
-//   <React.StrictMode>
-//     <Suspense fallback={<Loader />}>
-//       <RouterProvider router={router} />
-//     </Suspense>
-//   </React.StrictMode>
-// );
+//const Loader = lazy(() => import("./components/table/Loader"));
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Suspense fallback={<span>Loading...</span>}>
+      <RouterProvider router={router} />
+    </Suspense>
   </React.StrictMode>
 );
