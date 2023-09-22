@@ -9,9 +9,6 @@ import departments from "../../data/departments.json";
 import Dropdown from "./Dropdown";
 import Input from "./Input";
 
-//   const [state, setState] = useState("");
-//   const [department, setDepartment] = useState("");
-
 export default function NewEmployeeForm() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -74,8 +71,6 @@ export default function NewEmployeeForm() {
   }, []);
 
   const handleRegistration = async (data) => {
-    console.log(data);
-
     if (data)
       try {
         setLoading(true);
@@ -84,7 +79,6 @@ export default function NewEmployeeForm() {
         setShowModal(true);
         reset();
       } catch (error) {
-        console.error(error);
         setError("A server error occurred. Please try again later.");
       } finally {
         setLoading(false);
@@ -120,7 +114,6 @@ export default function NewEmployeeForm() {
                 label="First name"
                 type="text"
                 autoComplete="off"
-                //autoComplete={"given-name"}
                 register={register}
                 errors={errors}
                 registerOptions={registerOptions.firstName}
@@ -134,7 +127,6 @@ export default function NewEmployeeForm() {
                 label="Last name"
                 type="text"
                 autoComplete="off"
-                //autoComplete={"family-name"}
                 register={register}
                 errors={errors}
                 registerOptions={registerOptions.lastName}
@@ -186,7 +178,6 @@ export default function NewEmployeeForm() {
                 label="Street"
                 type="text"
                 autoComplete="off"
-                //autoComplete={"street-address"}
                 register={register}
                 errors={errors}
                 registerOptions={registerOptions.street}
@@ -199,7 +190,6 @@ export default function NewEmployeeForm() {
                 label="City"
                 type="text"
                 autoComplete="off"
-                //autoComplete="address-level2"
                 register={register}
                 errors={errors}
                 registerOptions={registerOptions.city}
@@ -212,38 +202,19 @@ export default function NewEmployeeForm() {
                 label="ZIP code"
                 type="text"
                 autoComplete="off"
-                //autoComplete={"postal-code"}
                 register={register}
                 errors={errors}
                 registerOptions={registerOptions.zipCode}
               />
             </div>
-            {/* <Dropdown
+            <Dropdown
+              dropdownName="state"
               label="State"
               name="state"
               options={states}
               register={register}
               errors={errors}
               registerOptions={registerOptions.state}
-            /> */}
-
-            <Controller
-              control={control}
-              name="state"
-              rules={registerOptions.state}
-              render={({ field }) => (
-                <Dropdown
-                  defaultValue={field}
-                  onChange={(state) => field.onChange(state)}
-                  label="State"
-                  name="state"
-                  options={states}
-                  selected={field.value}
-                  register={register}
-                  errors={errors}
-                  registerOptions={registerOptions.state}
-                />
-              )}
             />
           </div>
         </fieldset>
@@ -287,6 +258,7 @@ export default function NewEmployeeForm() {
             </div>
 
             <Dropdown
+              dropdownName="department"
               name="department"
               label="Department"
               register={register}
