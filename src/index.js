@@ -8,7 +8,6 @@ const Loader = lazy(() => import("./components/Loader"));
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* <Suspense fallback={<span>Loading...</span>}> */}
     <Suspense fallback={<Loader />}>
       <RouterProvider router={router} />
     </Suspense>

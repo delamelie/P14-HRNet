@@ -1,10 +1,10 @@
-import employees from "../../data/employees.json";
-//import { getEmployees } from "../../services/api";
+//import employees from "../../data/employees.json";
+import { getEmployees } from "../../services/api";
 import { useEffect, useState, useMemo } from "react";
 import { MaterialReactTable } from "material-react-table";
 
 export default function EmployeesTable() {
-  //const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -13,8 +13,8 @@ export default function EmployeesTable() {
 
     const getEmployeesData = async () => {
       try {
-        //const data = await getEmployees();
-        //setEmployees(data);
+        const data = await getEmployees();
+        setEmployees(data);
         setError(null);
       } catch (error) {
         setError("A server error occurred. Please try again later...");
